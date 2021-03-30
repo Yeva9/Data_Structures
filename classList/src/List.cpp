@@ -1,13 +1,7 @@
 #include "List.hpp"
 
-Node::Node(int val)
-	:data(val)
-	,next(nullptr)
-	,prev(nullptr)
-{}
-
 List::List()
-    :m_size(0)
+	:m_size(0)
     ,m_head(nullptr)
     ,m_tail(nullptr)
 {}
