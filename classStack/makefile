@@ -1,17 +1,21 @@
 
 export EXE := main
-export CC := g++
-export SOURCES := $(wildcard *.cpp)
-export DEPS := $(patsubst %.cpp, %.dep, $(SOURCES))
+#########################################
+export SOURCE_FILES := $(wildcard *.cpp)
+export OBJ_FILES := $(patsubst %.cpp, %.o, $(SOURCE_FILES))
+export DEP_FILES := $(patsubst %.cpp, %.dep, $(SOURCE_FILES))
 
-$(EXE) : $(SOURCES)
-	$(CC) $^ -o $@
+$(EXE) : $(OBJ_FILES)
+	g++ $^ -o $@
 
-%.dep : %.cpp
-	$(CC) -MM $^ -o $@
+%.o :
+	g++ -c $< -o $@
+
+%.dep : %.cpp 
+	g++ -MM $< -o $@
+
+-include $(DEP_FILES)
 
 .PHONY : clean
-clean :
-	rm $(DEPS) $(EXE)	
-
--include $(DEPS)
+clean:
+	rm $(EXE) $(OBJ_FILES) $(DEP_FILES)
